@@ -1,0 +1,8 @@
+opencv-python
+numpy
+osmnx
+tensorflow-lite
+gdal
+matplotlib
+plotly
+leaflet
