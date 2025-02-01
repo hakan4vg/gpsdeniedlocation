@@ -34,6 +34,6 @@ class ImageProcessor:
         """
         Captures an image from the drone camera OR synthetic.
         """
-        # Placeholder image (e.g., load from file for testing)
-        test_image = cv2.imread("synthetic_test_image.png")
+        image_path = self.config['geospatial_data']['test_image_path']
+        test_image = cv2.imread(image_path)
         return test_image

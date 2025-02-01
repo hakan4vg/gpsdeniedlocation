@@ -4,11 +4,25 @@ import cv2
 import matplotlib
 matplotlib.use('Agg') # This is required i dont know why
 import matplotlib.pyplot as plt
+import math
 
 def generate_synthetic_image():
-    # Fetch OSM data
-    gdf = ox.features_from_point((47.3769, 8.5417), tags={'building': True}, dist=100)
+    mission_center = (47.3769, 8.5417)
+    test_subnet_size_m = 500
+
+    lat, lon = mission_center
+
+    delta_lat = (test_subnet_size_m * 0.5) / 111320
+    delta_lon = (test_subnet_size_m * 0.5) / (111320 * math.cos(math.radians(lat)))
+
+    north = lat + delta_lat
+    south = lat - delta_lat
+    east = lon + delta_lon
+    west = lon - delta_lon
     
+    bbox = (west, south, east, north)
+    gdf = ox.features.features_from_bbox(bbox, tags={'building': True})
+
     
     dpi = 100
     width = 8
@@ -28,7 +42,7 @@ def generate_synthetic_image():
     height_px = int(height * dpi)
     img = img.reshape(height_px, width_px, 4)[:, :, :3]
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-    cv2.imwrite("data/synthetic_test_image.png", img)
+    cv2.imwrite("synthetic_test_image.png", img)
 
 if __name__ == "__main__":
     generate_synthetic_image()

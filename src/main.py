@@ -4,6 +4,7 @@ import config as config
 import drone_localization as drone_localization
 import image_processing as image_processing
 import geospatial_data as geospatial_data
+import generate_synthetic_data
 
 def plot_matches(image, keypoints, osm_points):
     """Visualize matched keypoints and OSM points."""
@@ -28,9 +29,10 @@ def main():
     processor = image_processing.ImageProcessor(cfg)
     geodata = geospatial_data.GeospatialData(cfg)
     
-    # Synthetic test image (replace with real data in the future)
-    test_image_path = cfg['test_image_path'] if 'test_image_path' in cfg else "synthetic_test_image.png"
-    test_image = cv2.imread(test_image_path)  # Generate using OSMnx
+    # Generate synthetic image
+    generate_synthetic_data.generate_synthetic_image()
+    
+    test_image = processor.get_image()
     features = processor.extract_features(test_image)
     print(f"Feature Extraction Output:")
     print(f"  Keypoints type: {type(features[0]) if features[0] else None}, Length: {len(features[0]) if features[0] else 0}")

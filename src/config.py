@@ -44,6 +44,7 @@ def create_default_config(config_path):
         'geospatial_data': {
             'osm_data_path': 'data/osm_data',
             'landmark_types': ['building', 'road', 'waterway'],
+            'test_image_path': 'synthetic_test_image.png',
         },
         'localization': {
             'matching_threshold': 0.7,
@@ -62,7 +63,6 @@ def create_default_config(config_path):
     
     return default_config
 
-# Example usage and default configuration structure
 if __name__ == "__main__":
     save_config(create_default_config())
     loaded_config = load_config()
