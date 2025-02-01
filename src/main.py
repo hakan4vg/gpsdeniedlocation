@@ -5,22 +5,43 @@ import drone_localization as drone_localization
 import image_processing as image_processing
 import geospatial_data as geospatial_data
 import generate_synthetic_data
+import osmnx as ox
 
 def plot_matches(image, keypoints, osm_points):
     """Visualize matched keypoints and OSM points."""
     plt.figure(figsize=(12, 6))
-    
+
     # Plot drone image with keypoints
     plt.subplot(121)
     plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
     plt.scatter([kp.pt[0] for kp in keypoints], [kp.pt[1] for kp in keypoints], c='r', s=10)
-    plt.title('Drone Image Keypoints')
-    
+    plt.title("Drone Image Keypoints")
+
     # Plot OSM points
     plt.subplot(122)
-    plt.scatter([p.x for p in osm_points], [p.y for p in osm_points], c='b', s=10)
-    plt.title('Matched OSM Landmarks')
-    plt.show()
+    if osm_points:
+        plt.scatter([p.x for p in osm_points], [p.y for p in osm_points], c='b', s=10)
+    plt.title("OSM Features")
+
+    # --- Add these lines to adjust plot limits ---
+    if keypoints and osm_points:
+        all_x_coords_kp = [kp.pt[0] for kp in keypoints]
+        all_y_coords_kp = [kp.pt[1] for kp in keypoints]
+        all_x_coords_osm = [p.x for p in osm_points]
+        all_y_coords_osm = [p.y for p in osm_points]
+
+        all_x_coords = all_x_coords_kp + all_x_coords_osm
+        all_y_coords = all_y_coords_kp + all_y_coords_osm
+
+        if all_x_coords and all_y_coords: 
+            plt.subplot(121) 
+            min_x, max_x = min(all_x_coords), max(all_x_coords)
+            plt.gca().invert_yaxis() 
+
+            plt.subplot(122) # 
+            min_y, max_y = min(all_y_coords), max(all_y_coords)
+            plt.gca().invert_yaxis()
+
     plt.savefig("data/matches.png")
 
 def main():
