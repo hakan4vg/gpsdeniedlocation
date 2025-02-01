@@ -34,6 +34,8 @@ def main():
     
     test_image = processor.get_image()
     features = processor.extract_features(test_image)
+    if features[1] is not None:
+        print(f"Image Descriptors - Shape: {features[1].shape}, Dtype: {features[1].dtype}")
     print(f"Feature Extraction Output:")
     print(f"  Keypoints type: {type(features[0]) if features[0] else None}, Length: {len(features[0]) if features[0] else 0}")
     print(f"  Descriptors type: {type(features[1]) if features[1] is not None else None}, Shape: {features[1].shape if features[1] is not None else None}")

@@ -111,11 +111,17 @@ class GeospatialData:
         
         # Match descriptors with  BFMatcher
         osm_descriptors = np.array([f['descriptor'] for f in self.osm_features], dtype=np.uint8)
-        print(f"Shape of image descriptors: {descriptors.shape}")
-        print(f"Shape of osm descriptors: {osm_descriptors.shape}")
+        print(f"Image Descriptors - Shape: {descriptors.shape if descriptors is not None else None}, Dtype: {descriptors.dtype if descriptors is not None else None}")
+        print(f"OSM Descriptors - Shape: {osm_descriptors.shape if osm_descriptors is not None else None}, Dtype: {osm_descriptors.dtype if osm_descriptors is not None else None}")
+
 
         matches = self.bf.match(descriptors, osm_descriptors)
 
+        print(f"Number of matches found: {len(matches)}")
+        if matches:
+            avg_match_distance = np.mean([m.distance for m in matches])
+            print(f"Average match distance: {avg_match_distance}")
+            
         matches = sorted(matches, key=lambda x: x.distance)
         good_matches = matches[:50]  # Top 50 matches
         
