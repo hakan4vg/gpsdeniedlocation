@@ -1,0 +1,39 @@
+backend: sam_road
+
+sam_road:
+  config_path: third_party/sam_road/config/toponet_vitb_512_cityscale.yaml
+  checkpoint_path: models/cityscale_vitb_512_e10.ckpt
+  sam_checkpoint_path: models/sam_vit_b_01ec64.pth
+  device: cpu
+  patch_size: 512
+  patches_per_edge: 16
+  sample_margin: 64
+  stride: null
+  batch_size: 4
+  road_threshold: 0.364
+  downscale_max_size: null
+  multi_scale_max_sizes: null
+  multi_scale_fuse: max
+  mask_channel: 1
+  auto_threshold: false
+  target_coverage: 0.02
+  threshold_min: 0.05
+  threshold_max: 0.9
+  blur_kernel: null
+  blur_sigma: null
+  return_prob: false
+  postprocess:
+    close_iters: 1
+    open_iters: 0
+    kernel_size: 3
+    min_component_area: 150
+    skeletonize: false
+    prune_iters: 0
+
+classic:
+  blur_kernel: 5
+  canny_low: 50
+  canny_high: 150
+  close_iters: 1
+  open_iters: 0
+  kernel_size: 3

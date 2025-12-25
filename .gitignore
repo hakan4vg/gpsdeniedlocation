@@ -1,6 +1,8 @@
-data/
+__pycache__/
+*.pyc
 .DS_Store
-cache/
-config/
-src/__pycache__/
-synthetic_test_image.png
+._*
+models/
+third_party/
+UAV_VisLoc_dataset/
+outputs/
