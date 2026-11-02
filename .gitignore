@@ -1,6 +1,0 @@
-data/
-.DS_Store
-cache/
-config/
-src/__pycache__/
-synthetic_test_image.png
